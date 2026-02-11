@@ -1,4 +1,5 @@
 # Fundo Mágico — Gerador de Fundos alimentado por IA
+https://leo-gouvea.github.io/fundo-magico/
 
 ## 🧠 Sobre o Projeto
 
