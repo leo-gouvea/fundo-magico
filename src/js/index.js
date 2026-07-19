@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 4. Fazer uma requisição HTTP (POST) para a API do n8n, enviando o texto do formulário no corpo da requisição em formato JSON.
     try {
       const answer = await fetch(
-        "https://leonardogouvea.app.n8n.cloud/webhook/fundo-magico",
+        "https://n8n-production-3db5.up.railway.app/webhook/fundo-magico",
         {
           method: "POST",
           headers: {
