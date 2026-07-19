@@ -43,6 +43,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
       previewSection.style.display = "block";
 
+      const previewContainer = document.getElementById("preview-container");
+      if (previewContainer) {
+        previewContainer.innerHTML = data.html;
+      }
+
       let styleTag = document.getElementById("dynamic-style");
       if (styleTag) {
         styleTag.remove();
