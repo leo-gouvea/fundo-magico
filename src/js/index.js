@@ -37,33 +37,41 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       const data = await answer.json();
- 
-codigoHtml.textContent = data.html || "";
-codigoCss.textContent = data.css || "";
 
-previewSection.style.display = "block";
+      codigoHtml.textContent = data.html || "";
+      codigoCss.textContent = data.css || "";
 
-const previewContainer = document.getElementById("preview-container");
-if (previewContainer) {
-  previewContainer.innerHTML = data.html;
-}
+      previewSection.style.display = "block";
 
-let styleTag = document.getElementById("dynamic-style");
-if (styleTag) {
-  styleTag.remove();
-}
+      let styleTag = document.getElementById("dynamic-style");
+      if (styleTag) {
+        styleTag.remove();
+      }
 
-if (data.css) {
-  styleTag = document.createElement("style");
-  styleTag.id = "dynamic-style";
-  // Limita o CSS apenas ao preview-container
-  styleTag.textContent = data.css.replace(
-    /([^{}]+)\{/g,
-    (match, selector) => `#preview-container ${selector.trim()} {`
-  );
-  document.head.appendChild(styleTag);
-}
-
+      if (data.css) {
+        styleTag = document.createElement("style");
+        styleTag.id = "dynamic-style";
+        styleTag.textContent = `
+    #preview-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+    #preview-container * {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    ${data.css}
+  `;
+        document.head.appendChild(styleTag);
+      }
     } catch (error) {
       console.error("Erro ao enviar a requisição:", error);
       codigoHtml.textContent = "Não consegui gerar o HTML, tente novamente.";
