@@ -44,8 +44,9 @@ document.addEventListener("DOMContentLoaded", function () {
       previewSection.style.display = "block";
 
       const previewContainer = document.getElementById("preview-container");
+
       if (previewContainer) {
-        previewContainer.innerHTML = data.html;
+        previewContainer.innerHTML = `<div class="${data.html.match(/class='([^']+)'/)?.[1] || "fundo"}"></div>`;
       }
 
       let styleTag = document.getElementById("dynamic-style");
@@ -57,9 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
         styleTag = document.createElement("style");
         styleTag.id = "dynamic-style";
         styleTag.textContent = `
-    body {
-      position: relative;
-    }
     #preview-container {
       position: fixed;
       top: 0;
@@ -68,13 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
       height: 100%;
       z-index: -1;
       pointer-events: none;
-    }
-    #preview-container * {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
+      overflow: hidden;
     }
     ${data.css}
   `;
