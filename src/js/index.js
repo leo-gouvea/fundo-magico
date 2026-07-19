@@ -57,6 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
         styleTag = document.createElement("style");
         styleTag.id = "dynamic-style";
         styleTag.textContent = `
+    body {
+      position: relative;
+    }
     #preview-container {
       position: fixed;
       top: 0;
@@ -67,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
       pointer-events: none;
     }
     #preview-container * {
-      position: absolute !important;
+      position: fixed !important;
       top: 0 !important;
       left: 0 !important;
       width: 100% !important;
