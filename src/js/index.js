@@ -37,24 +37,33 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       const data = await answer.json();
-      codigoHtml.textContent = data.html || "";
-      codigoCss.textContent = data.css || "";
+ 
+codigoHtml.textContent = data.html || "";
+codigoCss.textContent = data.css || "";
 
-      previewSection.style.display = "block";
-      previewSection.innerHTML = data.html;
+previewSection.style.display = "block";
 
-      let styleTag = document.getElementById("dynamic-style");
-      //se essa tag já existir, removemos antes de criar uma nova
-      if (styleTag) {
-        styleTag.remove();
-      }
+const previewContainer = document.getElementById("preview-container");
+if (previewContainer) {
+  previewContainer.innerHTML = data.html;
+}
 
-      if (data.css) {
-        styleTag = document.createElement("style");
-        styleTag.id = "dynamic-style";
-        styleTag.textContent = data.css;
-        document.head.appendChild(styleTag);
-      }
+let styleTag = document.getElementById("dynamic-style");
+if (styleTag) {
+  styleTag.remove();
+}
+
+if (data.css) {
+  styleTag = document.createElement("style");
+  styleTag.id = "dynamic-style";
+  // Limita o CSS apenas ao preview-container
+  styleTag.textContent = data.css.replace(
+    /([^{}]+)\{/g,
+    (match, selector) => `#preview-container ${selector.trim()} {`
+  );
+  document.head.appendChild(styleTag);
+}
+
     } catch (error) {
       console.error("Erro ao enviar a requisição:", error);
       codigoHtml.textContent = "Não consegui gerar o HTML, tente novamente.";
